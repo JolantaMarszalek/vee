@@ -1,1 +1,1 @@
-This is VEE project.
+This is VEE project
