@@ -1,5 +1,11 @@
+import { InfiniteScroll } from "./components/InfiniteScroll.component";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <InfiniteScroll />
+    </>
+  );
 }
 
 export default App;
