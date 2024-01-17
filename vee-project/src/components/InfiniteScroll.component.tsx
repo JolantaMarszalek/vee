@@ -77,15 +77,13 @@ export const InfiniteScroll = () => {
 
   const renderList = () => {
     return data.map((item) => (
-      <InfiniteSection>
-        <div key={item.id}>
-          <InfiniteImage>
-            <img src={item.img} alt="No image" style={{ maxWidth: "100%" }} />
-          </InfiniteImage>
-          <InfiniteBreedSection>
-            Breed: <InfiniteSingleBreed>{item.breed}</InfiniteSingleBreed>
-          </InfiniteBreedSection>
-        </div>
+      <InfiniteSection key={item.id}>
+        <InfiniteImage>
+          <img src={item.img} alt="No image" style={{ maxWidth: "100%" }} />
+        </InfiniteImage>
+        <InfiniteBreedSection>
+          Breed: <InfiniteSingleBreed>{item.breed}</InfiniteSingleBreed>
+        </InfiniteBreedSection>
       </InfiniteSection>
     ));
   };
