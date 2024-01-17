@@ -6,8 +6,8 @@ export const InfiniteSection = styled.section`
   align-items: center;
   height: 100%;
   padding: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 
   @media (max-width: 1024px) {
     height: 100%;
