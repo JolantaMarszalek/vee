@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import {
+  InfiniteBreedSection,
+  InfiniteImage,
+  InfiniteSection,
+  InfiniteSingleBreed,
+} from "./InfiniteScroll.styled";
 
 type DogData = {
   id: string;
   title?: string;
   breed?: string;
-  //   subBreed?: string;
   img?: string;
   description?: string;
 };
@@ -36,16 +41,6 @@ export const InfiniteScroll = () => {
       const randomBreedIndex = Math.floor(Math.random() * breedNames.length);
       const randomBreed = breedNames[randomBreedIndex];
 
-      //   const subBreedListResponse = await fetch(
-      //     `https://dog.ceo/api/breed/${randomBreed}/list`
-      //   );
-      //   const subBreedListResult = await subBreedListResponse.json();
-
-      //   const randomSubBreedIndex = Math.floor(
-      //     Math.random() * subBreedListResult.message.length
-      //   );
-      //   const randomSubBreed = subBreedListResult.message[randomSubBreedIndex];
-
       const randomBreedImagesResponse = await fetch(
         `https://dog.ceo/api/breed/${randomBreed}/images`
       );
@@ -57,18 +52,6 @@ export const InfiniteScroll = () => {
       const randomBreedImage =
         randomBreedImagesResult.message[randomBreedImageIndex];
 
-      //   const response = await fetch(
-      //     "https://dog.ceo/api/breeds/image/random/10"
-      //   );
-
-      //   const result = await response.json();
-
-      //   const newData = result.message.map((url: string, index: number) => ({
-      //     id: index + 1 + (page - 1) * 10,
-      //     img: url,
-      //     description: `Dog ${index + 1 + (page - 1) * 10}`,
-      //   }));
-
       const newData = [
         {
           id: uuidv4(),
@@ -76,7 +59,7 @@ export const InfiniteScroll = () => {
           breed: randomBreed,
           //   subBreed: randomSubBreed,
           img: randomBreedImage,
-          description: `Breed: ${randomBreed}`,
+          //   description: randomBreed,
           //   Sub-breed: ${randomSubBreed || "-"}`,
         },
       ];
@@ -98,51 +81,24 @@ export const InfiniteScroll = () => {
     }
   };
 
-  //     const newData = generateRandomData();
-  //     setData((prevData) => [...prevData, ...newData]);
-  //   };
-
-  //   const generateRandomData = () => {
-  //     const newData = Array.from({ length: 10 }, (_, index) => ({
-  //       id: index + 1 + (page - 1) * 10,
-  //       title: `Item ${index + 1 + (page - 1) * 10}`,
-  //     }));
-  //     return newData;
-  //   };
-
-  //   useEffect(() => {
-  //     fetchData();
-  //   }, [fetchData]);
-
-  //   const handleLoadMore = () => {
-  //     setPage((prevPage) => prevPage + 1);
-  //     fetchData();
-  //   };
-
   const renderList = () => {
     return data.map((item) => (
-      <div
-        key={item.id}
-        style={{ padding: "20px", borderBottom: "1px solid #ccc" }}>
-        {/* {item.title} */}{" "}
-        <img
-          src={item.img}
-          //   alt={item.description}
-          style={{ maxWidth: "100%" }}
-        />
-        <p>{item.description}</p>
-      </div>
+      <InfiniteSection>
+        <div key={item.id}>
+          <InfiniteImage>
+            <img
+              src={item.img}
+              //   alt={item.description}
+              style={{ maxWidth: "100%" }}
+            />
+          </InfiniteImage>
+          <InfiniteBreedSection>
+            Breed: <InfiniteSingleBreed>{item.breed}</InfiniteSingleBreed>
+          </InfiniteBreedSection>
+        </div>
+      </InfiniteSection>
     ));
   };
 
-  return (
-    <div>
-      {renderList()}
-      {/* <button
-        onClick={handleLoadMore}
-        style={{ padding: "20px", marginTop: "10px" }}>
-        Load More
-      </button> */}
-    </div>
-  );
+  return <div>{renderList()}</div>;
 };
