@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import {
+  useState,
+  // useEffect
+} from "react";
 
 export const InfiniteScroll = () => {
   const [data, setData] = useState<Array<{ id: number; title: string }>>([]);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  //   useEffect(() => {
+  //     fetchData();
+  //   }, []);
 
   const fetchData = () => {
     const newData = generateRandomData();
@@ -20,6 +23,10 @@ export const InfiniteScroll = () => {
     }));
     return newData;
   };
+
+  //   useEffect(() => {
+  //     fetchData();
+  //   }, [fetchData]);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
