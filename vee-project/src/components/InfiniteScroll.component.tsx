@@ -9,10 +9,8 @@ import {
 
 type DogData = {
   id: string;
-  title?: string;
   breed?: string;
   img?: string;
-  description?: string;
 };
 
 export const InfiniteScroll = () => {
@@ -55,12 +53,8 @@ export const InfiniteScroll = () => {
       const newData = [
         {
           id: uuidv4(),
-          //   id: (page - 1) * 10 + 1,
           breed: randomBreed,
-          //   subBreed: randomSubBreed,
           img: randomBreedImage,
-          //   description: randomBreed,
-          //   Sub-breed: ${randomSubBreed || "-"}`,
         },
       ];
 
@@ -86,11 +80,7 @@ export const InfiniteScroll = () => {
       <InfiniteSection>
         <div key={item.id}>
           <InfiniteImage>
-            <img
-              src={item.img}
-              //   alt={item.description}
-              style={{ maxWidth: "100%" }}
-            />
+            <img src={item.img} alt="No image" style={{ maxWidth: "100%" }} />
           </InfiniteImage>
           <InfiniteBreedSection>
             Breed: <InfiniteSingleBreed>{item.breed}</InfiniteSingleBreed>
