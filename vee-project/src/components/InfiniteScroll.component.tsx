@@ -13,7 +13,7 @@ type DogData = {
   img?: string;
 };
 
-export const InfiniteScroll = () => {
+export const InfiniteScroll: React.FC = () => {
   const [data, setData] = useState<DogData[]>([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +50,7 @@ export const InfiniteScroll = () => {
       const randomBreedImage =
         randomBreedImagesResult.message[randomBreedImageIndex];
 
-      const newData = [
+      const newData: DogData[] = [
         {
           id: uuidv4(),
           breed: randomBreed,
