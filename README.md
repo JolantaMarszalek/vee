@@ -1,1 +1,1 @@
-# vee
+This is VEE project
