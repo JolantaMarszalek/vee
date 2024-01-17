@@ -13,9 +13,15 @@ type DogData = {
 export const InfiniteScroll = () => {
   const [data, setData] = useState<DogData[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const fetchData = async () => {
@@ -78,6 +84,17 @@ export const InfiniteScroll = () => {
       setData((prevData) => [...prevData, ...newData]);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading) {
+      setPage((prevPage) => prevPage + 1);
+      fetchData();
     }
   };
 
@@ -97,10 +114,10 @@ export const InfiniteScroll = () => {
   //     fetchData();
   //   }, [fetchData]);
 
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-    fetchData();
-  };
+  //   const handleLoadMore = () => {
+  //     setPage((prevPage) => prevPage + 1);
+  //     fetchData();
+  //   };
 
   const renderList = () => {
     return data.map((item) => (
@@ -110,7 +127,7 @@ export const InfiniteScroll = () => {
         {/* {item.title} */}{" "}
         <img
           src={item.img}
-          alt={item.description}
+          //   alt={item.description}
           style={{ maxWidth: "100%" }}
         />
         <p>{item.description}</p>
@@ -121,11 +138,11 @@ export const InfiniteScroll = () => {
   return (
     <div>
       {renderList()}
-      <button
+      {/* <button
         onClick={handleLoadMore}
         style={{ padding: "20px", marginTop: "10px" }}>
         Load More
-      </button>
+      </button> */}
     </div>
   );
 };
