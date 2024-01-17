@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   InfiniteBreedSection,
@@ -18,16 +18,16 @@ export const InfiniteScroll = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-    window.addEventListener("scroll", handleScroll);
+  //   useEffect(() => {
+  //     fetchData();
+  //     window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //     return () => {
+  //       window.removeEventListener("scroll", handleScroll);
+  //     };
+  //   }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const breedListResponse = await fetch(
         "https://dog.ceo/api/breeds/list/all"
@@ -64,16 +64,31 @@ export const InfiniteScroll = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [setIsLoading]);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading) {
       setPage((prevPage) => prevPage + 1);
       fetchData();
     }
-  };
+  }, [isLoading, setPage, fetchData]);
+
+  useEffect(() => {
+    const fetchDataAndHandleScroll = async () => {
+      await fetchData();
+      handleScroll();
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    fetchDataAndHandleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [fetchData, handleScroll, page]);
 
   const renderList = () => {
     return data.map((item) => (
