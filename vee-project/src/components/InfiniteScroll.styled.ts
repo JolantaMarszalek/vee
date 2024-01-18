@@ -15,6 +15,7 @@ export const InfiniteSection = styled.section`
 
   @media (max-width: 375px) {
     height: 100%;
+    font-size: 25px;
   }
 `;
 
