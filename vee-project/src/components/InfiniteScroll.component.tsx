@@ -18,15 +18,6 @@ export const InfiniteScroll: React.FC = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  //   useEffect(() => {
-  //     fetchData();
-  //     window.addEventListener("scroll", handleScroll);
-
-  //     return () => {
-  //       window.removeEventListener("scroll", handleScroll);
-  //     };
-  //   }, []);
-
   const fetchData = useCallback(async () => {
     try {
       const breedListResponse = await fetch(
